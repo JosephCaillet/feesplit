@@ -1,0 +1,58 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			FeeSplit
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding text-center>
+	<button ion-button icon-start block (click)="addPerson()">
+		<ion-icon name="person"></ion-icon>
+		Add person
+	</button>
+	<button ion-button icon-start block color="danger" (click)="removeAll()">
+		<ion-icon name="trash"></ion-icon>
+		Remove every person
+	</button>
+
+	<ion-card *ngFor="let person of people; let personIndex = index">
+		<ion-card-header no-padding>
+			{{ person.name }}
+		</ion-card-header>
+		<ion-card-content no-padding>
+			<ion-item *ngFor="let fee of person.fees; let feeIndex = index">
+				<ion-input placeholder="Fee" [value]="fee" (ionBlur)="setFee(personIndex, feeIndex, $event.value)"></ion-input>
+			</ion-item>
+			<ion-item>
+				Total: {{ person.amount }}
+			</ion-item>
+			<button ion-button icon-start (click)="addFee(personIndex)">
+				<ion-icon name="add"></ion-icon>
+				Add fee
+			</button>
+		</ion-card-content>
+	</ion-card>
+
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label floating>Total with taxes</ion-label>
+					<ion-input [(ngModel)]="total"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col>
+				<ion-item>
+					<ion-label floating>Tips</ion-label>
+					<ion-input [(ngModel)]="tip"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<button ion-button icon-start block color="secondary" (click)="calculate()">
+		<ion-icon name="calculator"></ion-icon>
+		Calculate
+	</button>
+</ion-content>
