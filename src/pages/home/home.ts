@@ -22,7 +22,7 @@ export class HomePage {
 			fees: [0],
 			name: 'Common fees'
 		}
-		// this.createTestingData()
+		this.createTestingData()
 	}
 
 	private createTestingData() {
@@ -69,7 +69,20 @@ export class HomePage {
 	}
 
 	public calculate() {
-		let commonFee = this.areTheyFeeInCommon ? this.commonFee.fees.reduce((totalCommon, currentFee) => totalCommon + currentFee, 0) : 0
+		console.log(this.commonFee);
+		console.log();
+
+		console.log(this.people);
+		console.log();
+
+		console.log(this.total);
+		console.log();
+
+		console.log(this.tip);
+		console.log();
+		console.log();
+
+		let commonFee = this.areTheyFeeInCommon ? this.commonFee.fees.reduce((totalCommon, currentFee) => totalCommon + parseFloat(<any>currentFee), 0) : 0
 		let commonFeeByPerson = commonFee / this.people.length
 		let sum = commonFee
 
@@ -78,7 +91,7 @@ export class HomePage {
 		for (let person of this.people) {
 			person.amount = 0
 			for (let fee of person.fees) {
-				person.amount += fee
+				person.amount += parseFloat(<any>fee)
 				sum += fee
 			}
 		}
@@ -86,6 +99,7 @@ export class HomePage {
 		for (let person of this.people) {
 			person.amount += commonFeeByPerson
 			person.amount = (person.amount / sum) * (this.total + this.tip)
+			person.amount = parseFloat(person.amount.toFixed(2))
 		}
 	}
 
