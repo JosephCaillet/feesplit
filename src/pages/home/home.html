@@ -11,15 +11,15 @@
 		<ion-row>
 			<ion-col>
 				<button ion-button icon-start block color="danger" (click)="removeAll()">
-				<ion-icon name="trash"></ion-icon>
-				Clear all
-			</button>
+					<ion-icon name="trash"></ion-icon>
+					Clear all
+				</button>
 			</ion-col>
 			<ion-col>
 				<button ion-button icon-start block (click)="addPerson()">
-				<ion-icon name="person-add"></ion-icon>
-				Add person
-			</button>
+					<ion-icon name="person-add"></ion-icon>
+					Add person
+				</button>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
@@ -34,12 +34,23 @@
 			{{ commonFee.name }}
 		</ion-card-header>
 		<ion-card-content no-padding>
-			<ion-item *ngFor="let fee of commonFee.fees; let feeIndex = index">
-				<ion-input placeholder="Fee" [value]="fee" (ionBlur)="setFee(-1, feeIndex, $event.value)"></ion-input>
-			</ion-item>
-			<button ion-button icon-start (click)="addFee(-1)">
+			<ion-grid no-padding>
+				<ion-row *ngFor="let fee of commonFee.fees; let feeIndex = index; trackBy: trackByFee">
+					<ion-col>
+						<ion-item>
+							<ion-input placeholder="Fee" [(ngModel)]="commonFee.fees[feeIndex]"></ion-input>
+						</ion-item>
+					</ion-col>
+					<ion-col col-2>
+						<button ion-button icon-only clear color="danger" (click)="removeFee(-1, feeIndex)">
+							<ion-icon name="remove"></ion-icon>
+						</button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+			<button ion-button icon-start clear (click)="addFee(-1)">
 				<ion-icon name="add"></ion-icon>
-				Add fee
+				Add fee in common
 			</button>
 		</ion-card-content>
 	</ion-card>
@@ -49,13 +60,34 @@
 			{{ person.name }}
 		</ion-card-header>
 		<ion-card-content no-padding>
-			<ion-item *ngFor="let fee of person.fees; let feeIndex = index">
-				<ion-input placeholder="Fee" [value]="fee" (ionBlur)="setFee(personIndex, feeIndex, $event.value)"></ion-input>
-			</ion-item>
-			<ion-item>
-				To be paid: {{ person.amount }}
-			</ion-item>
-			<button ion-button icon-start (click)="addFee(personIndex)">
+			<ion-grid no-padding>
+				<ion-row *ngFor="let fee of person.fees; let feeIndex = index; trackBy: trackByFee">
+					<ion-col>
+						<ion-item>
+							<ion-input placeholder="Fee" [(ngModel)]="people[personIndex].fees[feeIndex]"></ion-input>
+						</ion-item>
+					</ion-col>
+					<ion-col col-2>
+						<button ion-button icon-only clear color="danger" (click)="removeFee(personIndex, feeIndex)">
+							<ion-icon name="remove"></ion-icon>
+						</button>
+					</ion-col>
+				</ion-row>
+				<ion-row align-items-center>
+					<ion-col><ion-item>To be paid: {{ person.amount }}</ion-item></ion-col>
+					<ion-col col-2>
+						<button ion-button icon-only clear (click)="copyToClipboard(personIndex)">
+							<ion-icon name="copy"></ion-icon>
+						</button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+
+			<button ion-button icon-start clear color="danger" (click)="removePerson(personIndex)">
+					<ion-icon name="close"></ion-icon>
+					Remove person
+			</button>
+			<button ion-button icon-start clear (click)="addFee(personIndex)">
 				<ion-icon name="add"></ion-icon>
 				Add fee
 			</button>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Clipboard } from '@ionic-native/clipboard';
 
 @Component({
 	selector: 'page-home',
@@ -13,7 +14,7 @@ export class HomePage {
 	public commonFee: Person
 	public areTheyFeeInCommon: boolean
 
-	constructor(public navCtrl: NavController) {
+	constructor(public navCtrl: NavController, private clipboard: Clipboard) {
 		this.people = new Array
 		this.areTheyFeeInCommon = true
 		this.commonFee = {
@@ -44,8 +45,8 @@ export class HomePage {
 		this.getPersonByIndex(personIndex).fees.push(0)
 	}
 
-	public setFee(personIndex, feeIndex, value) {
-		this.getPersonByIndex(personIndex).fees[feeIndex] = parseFloat(value)
+	public removeFee(personIndex: number, feeIndex: number) {
+		this.getPersonByIndex(personIndex).fees.splice(feeIndex, 1)
 	}
 
 	public addPerson() {
@@ -54,6 +55,10 @@ export class HomePage {
 			fees: [0],
 			amount: 0
 		})
+	}
+
+	public removePerson(personIndex: number) {
+		this.people.splice(personIndex, 1)
 	}
 
 	public removeAll() {
@@ -79,5 +84,13 @@ export class HomePage {
 			person.amount += commonFeeByPerson
 			person.amount = (person.amount / sum) * (this.total + this.tip)
 		}
+	}
+
+	public trackByFee(index: number, fee: number) {
+		return index
+	}
+
+	public copyToClipboard(personIndex: number) {
+		this.clipboard.copy(`${this.getPersonByIndex(personIndex).amount}`)
 	}
 }
