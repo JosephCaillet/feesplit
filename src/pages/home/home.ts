@@ -7,25 +7,48 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-	people: Array<{
-		name: string,
-		amount: number
-		fees: Array<number>
-	}>
-	total: number
-	tip: number
+	public people: Array<Person>
+	public total: number
+	public tip: number
+	public commonFee: Person
+	public areTheyFeeInCommon: boolean
 
 	constructor(public navCtrl: NavController) {
 		this.people = new Array
-		this.total
-		this.tip
+		this.areTheyFeeInCommon = true
+		this.commonFee = {
+			amount: 0,
+			fees: [0],
+			name: 'Common fees'
+		}
+		// this.createTestingData()
 	}
 
-	addFee(personIndex: number) {
-		this.people[personIndex].fees.push(0)
+	private createTestingData() {
+		this.people.push({ amount: 0, name: 'P1', fees: [2] })
+		this.people.push({ amount: 0, name: 'P2', fees: [6] })
+		this.commonFee.fees[0] = 2
+		this.total = 10
+		this.tip = 2
 	}
 
-	addPerson() {
+	private getPersonByIndex(personIndex: number): Person {
+		if (personIndex == -1) {
+			return this.commonFee
+		} else {
+			return this.people[personIndex]
+		}
+	}
+
+	public addFee(personIndex: number) {
+		this.getPersonByIndex(personIndex).fees.push(0)
+	}
+
+	public setFee(personIndex, feeIndex, value) {
+		this.getPersonByIndex(personIndex).fees[feeIndex] = parseFloat(value)
+	}
+
+	public addPerson() {
 		this.people.push({
 			name: `Person ${this.people.length + 1}`,
 			fees: [0],
@@ -33,8 +56,15 @@ export class HomePage {
 		})
 	}
 
-	calculate() {
-		let sum = 0
+	public removeAll() {
+		this.people = []
+	}
+
+	public calculate() {
+		let commonFee = this.areTheyFeeInCommon ? this.commonFee.fees.reduce((totalCommon, currentFee) => totalCommon + currentFee, 0) : 0
+		let commonFeeByPerson = commonFee / this.people.length
+		let sum = commonFee
+
 		this.total = parseFloat(<any>this.total)
 		this.tip = parseFloat(<any>this.tip)
 		for (let person of this.people) {
@@ -45,27 +75,9 @@ export class HomePage {
 			}
 		}
 
-		for(let person of this.people) {
-			// console.log(typeof person.amount);
-			// console.log(person.amount);
-			// console.log(typeof sum);
-			// console.log(sum);
-			// console.log(typeof this.total);
-			// console.log(this.total);
-			// console.log(typeof this.tip);
-			// console.log(this.tip);
-
+		for (let person of this.people) {
+			person.amount += commonFeeByPerson
 			person.amount = (person.amount / sum) * (this.total + this.tip)
 		}
 	}
-
-	setFee(personIndex, feeIndex, value) {
-		this.people[personIndex].fees[feeIndex] = parseFloat(value)
-		// console.log(value)
-	}
-
-	removeAll() {
-		this.people = []
-	}
-
 }
