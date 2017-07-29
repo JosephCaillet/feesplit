@@ -59,6 +59,9 @@ export class HomePage {
 
 	public removePerson(personIndex: number) {
 		this.people.splice(personIndex, 1)
+		for(let i = 0; i< this.people.length; i++) {
+			this.people[i].name = `Person ${i+1}`
+		}
 	}
 
 	public removeAll() {
