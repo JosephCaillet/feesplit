@@ -23,7 +23,7 @@ export class HomePage {
 			name: 'Common fees'
 		}
 		this.tip = 0
-		this.createTestingDataSet3()
+		// this.createTestingDataSet3()
 	}
 
 	private createTestingDataSet1() {
