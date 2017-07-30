@@ -22,15 +22,32 @@ export class HomePage {
 			fees: [0],
 			name: 'Common fees'
 		}
-		// this.createTestingData()
+		this.tip = 0
+		this.createTestingDataSet3()
 	}
 
-	private createTestingData() {
+	private createTestingDataSet1() {
 		this.people.push({ amount: 0, name: 'P1', fees: [2] })
 		this.people.push({ amount: 0, name: 'P2', fees: [6] })
 		this.commonFee.fees[0] = 2
 		this.total = 10
 		this.tip = 2
+	}
+
+	private createTestingDataSet2() {
+		this.people.push({ amount: 0, name: 'P1', fees: [7.53, 8] })
+		this.people.push({ amount: 0, name: 'P2', fees: [5, 2] })
+		this.commonFee.fees[0] = 5
+		this.total = 30
+		this.tip = 2
+	}
+
+	private createTestingDataSet3() {
+		this.people.push({ amount: 0, name: 'P1', fees: [7.49, 3.99] })
+		this.people.push({ amount: 0, name: 'P2', fees: [1.79] })
+		this.commonFee.fees = [1.25, 2.69, 4.49, 4.39, 7.98, 4.39, 1.25, 5.49, 1.29, 1.29, 1.29, 1.25, 1.25]
+		this.total = 55.43
+		this.tip = 0
 	}
 
 	private getPersonByIndex(personIndex: number): Person {
@@ -78,7 +95,8 @@ export class HomePage {
 		for (let person of this.people) {
 			person.amount = 0
 			for (let fee of person.fees) {
-				person.amount += parseFloat(<any>fee)
+				fee = parseFloat(<any>fee)
+				person.amount += fee
 				sum += fee
 			}
 		}
