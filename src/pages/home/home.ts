@@ -59,7 +59,7 @@ export class HomePage {
 	}
 
 	public addFee(personIndex: number) {
-		this.getPersonByIndex(personIndex).fees.push(0)
+		this.getPersonByIndex(personIndex).fees.push(null)
 	}
 
 	public removeFee(personIndex: number, feeIndex: number) {
@@ -69,7 +69,7 @@ export class HomePage {
 	public addPerson() {
 		this.people.push({
 			name: `Person ${this.people.length + 1}`,
-			fees: [0],
+			fees: [null],
 			amount: 0
 		})
 	}
