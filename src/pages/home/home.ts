@@ -85,7 +85,7 @@ export class HomePage {
 		this.people = []
 		this.commonFee.amount = 0
 		this.commonFee.fees = [null]
-		this.total = undefined
+		this.total = null
 		this.tip = 0
 	}
 
