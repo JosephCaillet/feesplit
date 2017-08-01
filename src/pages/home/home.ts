@@ -19,7 +19,7 @@ export class HomePage {
 		this.areTheyFeeInCommon = true
 		this.commonFee = {
 			amount: 0,
-			fees: [0],
+			fees: [null],
 			name: 'Common fees'
 		}
 		this.tip = 0
@@ -83,6 +83,10 @@ export class HomePage {
 
 	public removeAll() {
 		this.people = []
+		this.commonFee.amount = 0
+		this.commonFee.fees = [null]
+		this.total = undefined
+		this.tip = 0
 	}
 
 	public calculate() {

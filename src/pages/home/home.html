@@ -64,7 +64,7 @@
 				<ion-row *ngFor="let fee of person.fees; let feeIndex = index; trackBy: trackByFee">
 					<ion-col>
 						<ion-item>
-							<ion-input placeholder="Add af ee" type="number" step="0.01" [(ngModel)]="people[personIndex].fees[feeIndex]"></ion-input>
+							<ion-input placeholder="Add a fee" type="number" step="0.01" [(ngModel)]="people[personIndex].fees[feeIndex]"></ion-input>
 						</ion-item>
 					</ion-col>
 					<ion-col col-2>
@@ -99,13 +99,13 @@
 			<ion-col>
 				<ion-item>
 					<ion-label floating>Total (without tips)</ion-label>
-					<ion-input [(ngModel)]="total"></ion-input>
+					<ion-input type="number" step="0.01" [(ngModel)]="total"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col>
 				<ion-item>
 					<ion-label floating>Tips</ion-label>
-					<ion-input [(ngModel)]="tip"></ion-input>
+					<ion-input type="number" step="0.01" [(ngModel)]="tip"></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>
