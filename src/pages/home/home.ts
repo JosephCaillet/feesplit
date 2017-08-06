@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { ToastController, NavController } from 'ionic-angular';
 import { Clipboard } from '@ionic-native/clipboard';
 
 @Component({
@@ -14,7 +14,7 @@ export class HomePage {
 	public commonFee: Person
 	public areTheyFeeInCommon: boolean
 
-	constructor(public navCtrl: NavController, private clipboard: Clipboard) {
+	constructor(public navCtrl: NavController, private clipboard: Clipboard, private toastController: ToastController) {
 		this.people = new Array
 		this.areTheyFeeInCommon = true
 		this.commonFee = {
@@ -76,8 +76,8 @@ export class HomePage {
 
 	public removePerson(personIndex: number) {
 		this.people.splice(personIndex, 1)
-		for(let i = 0; i< this.people.length; i++) {
-			this.people[i].name = `Person ${i+1}`
+		for (let i = 0; i < this.people.length; i++) {
+			this.people[i].name = `Person ${i + 1}`
 		}
 	}
 
@@ -117,6 +117,6 @@ export class HomePage {
 	}
 
 	public copyToClipboard(personIndex: number) {
-		this.clipboard.copy(`${this.getPersonByIndex(personIndex).amount}`)
+		this.clipboard.copy(`${this.getPersonByIndex(personIndex).amount}`).then(() => this.toastController.create({ message: 'Copied !', duration: 3000 }))
 	}
 }
